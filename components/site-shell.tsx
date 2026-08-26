@@ -5,8 +5,11 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Menu, X, Sun, Moon } from 'lucide-react'
 import { nav } from '@/lib/site-data'
+import { LiquidBackground, ScrollProgress, ScrollSpy } from '@/components/liquid-background'
+import { usePathname } from 'next/navigation'
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [dark, setDark] = useState(true)
   useEffect(() => {
@@ -21,7 +24,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     document.documentElement.classList.toggle('dark', nextDark)
     document.documentElement.classList.toggle('light', !nextDark)
   }
-  return <div className="min-h-screen overflow-hidden bg-background">
+  const pageClass = pathname === '/' ? 'page-home' : `page-${pathname.split('/')[1] || 'home'}`
+  return <div className={`min-h-screen overflow-hidden bg-background ${pageClass}`}>
+    <LiquidBackground /><ScrollProgress /><ScrollSpy />
     <div className="aurora" aria-hidden="true" /><div className="grid-overlay" aria-hidden="true" />
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8"><nav className="glass-nav mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
       <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight" onClick={() => setOpen(false)}><img src="/images/eveth-labs-logo.png" alt="Eveth Labs Tech" className="brand-logo" /><span>Eveth Labs <span className="text-muted-foreground">Tech</span></span></Link>
