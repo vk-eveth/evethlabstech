@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Menu, X, Sun, Moon } from 'lucide-react'
 import { nav } from '@/lib/site-data'
@@ -9,32 +9,11 @@ import { nav } from '@/lib/site-data'
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [dark, setDark] = useState(true)
-  const manualTheme = useRef(false)
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const applyTheme = (isDark: boolean) => {
-      setDark(isDark)
-      document.documentElement.classList.toggle('dark', isDark)
-      document.documentElement.classList.toggle('light', !isDark)
-    }
-    applyTheme(media.matches)
-    const onChange = (event: MediaQueryListEvent) => {
-      if (!manualTheme.current) applyTheme(event.matches)
-    }
-    media.addEventListener('change', onChange)
-    return () => media.removeEventListener('change', onChange)
-  }, [])
-
   function toggleTheme() {
-    manualTheme.current = true
-    applyTheme(!dark)
-  }
-
-  function applyTheme(isDark: boolean) {
-    setDark(isDark)
-    document.documentElement.classList.toggle('dark', isDark)
-    document.documentElement.classList.toggle('light', !isDark)
+    const nextDark = !dark
+    setDark(nextDark)
+    document.documentElement.classList.toggle('dark', nextDark)
+    document.documentElement.classList.toggle('light', !nextDark)
   }
   return <div className="min-h-screen overflow-hidden bg-background">
     <div className="aurora" aria-hidden="true" /><div className="grid-overlay" aria-hidden="true" />
