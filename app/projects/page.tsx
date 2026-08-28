@@ -18,7 +18,7 @@ export default function ProjectsPage() {
                     <span className="project-type">{project.type}</span>
                     {isExternal ? <ExternalLink size={17} className="text-muted-foreground" aria-hidden="true" /> : <ArrowUpRight size={17} className="text-muted-foreground" aria-hidden="true" />}
                   </div>
-                  <h2 className="mt-16 flex items-center gap-3 text-2xl font-medium tracking-tight">
+                  <h2 className="mt-10 flex flex-wrap items-center gap-3 text-2xl font-medium tracking-tight sm:mt-12">
                     {project.title}
                     {project.logo ? <img src={project.logo} alt={`${project.title} logo`} className="project-logo" /> : null}
                   </h2>
